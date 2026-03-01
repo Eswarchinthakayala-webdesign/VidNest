@@ -1,11 +1,12 @@
 {
   "rewrites": [
-
+    {
+      "source": "/s/:shortCode",
+      "destination": "https://vidnest-api.onrender.com/s/:shortCode"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"
     }
-
-
   ]
 }

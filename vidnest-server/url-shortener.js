@@ -99,12 +99,14 @@ app.post('/api/shorten', authMiddleware, async (req, res) => {
       return res.status(500).json({ error: 'Failed to create short link' });
     }
 
+    const shortUrlBase = process.env.SHORT_URL_BASE || `${req.protocol}://${req.get('host')}`;
+    
     // Return the generated short URL data
     res.status(201).json({
       message: 'Short link created',
       link: {
         ...data,
-        short_url: `${req.protocol}://${req.get('host')}/s/${short_code}`
+        short_url: `${shortUrlBase}/s/${short_code}`
       }
     });
   } catch (error) {
@@ -198,9 +200,10 @@ app.get('/api/links', authMiddleware, async (req, res) => {
       return res.status(500).json({ error: 'Failed to fetch links' });
     }
 
+    const shortUrlBase = process.env.SHORT_URL_BASE || `${req.protocol}://${req.get('host')}`;
     const linksWithUrls = data.map(link => ({
       ...link,
-      short_url: `${req.protocol}://${req.get('host')}/s/${link.short_code}`
+      short_url: `${shortUrlBase}/s/${link.short_code}`
     }));
 
     res.json({ links: linksWithUrls });
