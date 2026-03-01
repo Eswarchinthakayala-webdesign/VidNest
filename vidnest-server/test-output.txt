@@ -1,0 +1,2 @@
+URL: https://www.youtube.com/watch?v=dQw4w9WgXcQ -> Sanitized: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+URL: https://malicious.com/shell.sh -> Sanitized: BLOCKED

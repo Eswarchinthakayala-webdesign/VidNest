@@ -1,0 +1,65 @@
+// VidNest SaaS Database Schema
+// Using Neon PostgreSQL (serverless)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  googleId  String   @unique @map("google_id")
+  email     String   @unique
+  name      String
+  avatar    String?
+  role      String   @default("user") // user | admin
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  downloads Download[]
+
+  @@map("users")
+}
+
+model Download {
+  id               String   @id @default(uuid())
+  userId           String   @map("user_id")
+  originalUrl      String   @map("original_url")
+  platform         String   // youtube, instagram, twitter, tiktok, etc.
+  format           String   // mp4, mp3, webm, etc.
+  quality          String?  // 1080p, 720p, etc.
+  fileSize         BigInt?  @map("file_size") // in bytes
+  status           String   @default("pending") // pending, processing, success, failed
+  errorMessage     String?  @map("error_message")
+  processingTimeMs Int?     @map("processing_time_ms")
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+  @@index([platform])
+  @@index([status])
+  @@map("downloads")
+}
+
+model SystemLog {
+  id           String   @id @default(uuid())
+  endpoint     String
+  method       String   @default("GET")
+  statusCode   Int?     @map("status_code")
+  responseTime Int?     @map("response_time_ms") // in ms
+  errorFlag    Boolean  @default(false) @map("error_flag")
+  message      String?
+  ipAddress    String?  @map("ip_address")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@index([createdAt])
+  @@index([errorFlag])
+  @@index([endpoint])
+  @@map("system_logs")
+}
