@@ -239,17 +239,31 @@ export const Navbar = () => {
                     )}
 
                     <div className="space-y-1 mb-6">
+                      {!isHomePage && (
+                        <Link to="/" className="flex items-center gap-4 px-4 py-3.5 hover:bg-muted/60 rounded-[16px] transition-all font-bold text-[17px] text-foreground/90 group">
+                          <div className="p-2 rounded-xl bg-muted group-hover:bg-foreground group-hover:text-background transition-colors"><Home className="w-5 h-5" /></div>
+                          Home
+                        </Link>
+                      )}
+
+                      <Link to="/downloader" className={`flex items-center gap-4 px-4 py-3.5 hover:bg-muted/60 rounded-[16px] transition-all font-bold text-[17px] group ${location.pathname === '/downloader' ? 'text-foreground bg-muted/60 shadow-sm' : 'text-foreground/90'}`}>
+                        <div className={`p-2 rounded-xl transition-colors ${location.pathname === '/downloader' ? 'bg-foreground text-background' : 'bg-muted group-hover:bg-foreground group-hover:text-background'}`}>
+                          <Laptop className="w-5 h-5" />
+                        </div>
+                        Video Downloader
+                      </Link>
+
                       {isAuthenticated && (
-                         <>
-                           <Link to="/dashboard" className="flex items-center gap-4 px-4 py-3.5 hover:bg-muted/60 rounded-[16px] transition-all font-bold text-[17px] text-foreground/90 group">
-                             <div className="p-2 rounded-xl bg-muted group-hover:bg-foreground group-hover:text-background transition-colors"><BarChart3 className="w-5 h-5" /></div>
-                             Dashboard
-                           </Link>
-                           <Link to="/links" className="flex items-center gap-4 px-4 py-3.5 hover:bg-muted/60 rounded-[16px] transition-all font-bold text-[17px] text-foreground/90 group">
-                             <div className="p-2 rounded-xl bg-muted group-hover:bg-foreground group-hover:text-background transition-colors"><LinkIcon className="w-5 h-5" /></div>
-                             Short Links
-                           </Link>
-                         </>
+                        <>
+                          <Link to="/dashboard" className={`flex items-center gap-4 px-4 py-3.5 hover:bg-muted/60 rounded-[16px] transition-all font-bold text-[17px] group ${location.pathname === '/dashboard' ? 'text-foreground bg-muted/60 shadow-sm' : 'text-foreground/90'}`}>
+                            <div className={`p-2 rounded-xl transition-colors ${location.pathname === '/dashboard' ? 'bg-foreground text-background' : 'bg-muted group-hover:bg-foreground group-hover:text-background'}`}><BarChart3 className="w-5 h-5" /></div>
+                            Dashboard
+                          </Link>
+                          <Link to="/links" className={`flex items-center gap-4 px-4 py-3.5 hover:bg-muted/60 rounded-[16px] transition-all font-bold text-[17px] group ${location.pathname === '/links' ? 'text-foreground bg-muted/60 shadow-sm' : 'text-foreground/90'}`}>
+                            <div className={`p-2 rounded-xl transition-colors ${location.pathname === '/links' ? 'bg-foreground text-background' : 'bg-muted group-hover:bg-foreground group-hover:text-background'}`}><LinkIcon className="w-5 h-5" /></div>
+                            Short Links
+                          </Link>
+                        </>
                       )}
                       
                       {isHomePage && navLinks.map((link) => (
