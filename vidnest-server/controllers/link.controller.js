@@ -43,14 +43,14 @@ class LinkController {
         return res.status(500).json({ error: 'Failed to create short link' });
       }
 
-      const shortUrlBase = process.env.SHORT_URL_BASE || `${req.protocol}://${req.get('host')}`;
+      const baseUrl = `${req.protocol}://${req.get('host')}`;
       
       // Return generated link with full hostname
       res.status(201).json({
         message: 'Short link created',
         link: {
           ...data,
-          short_url: `${shortUrlBase}/s/${shortCode}`
+          short_url: `${baseUrl}/s/${shortCode}`
         }
       });
     } catch (error) {
@@ -216,7 +216,7 @@ class LinkController {
         totalClicks: link.total_clicks,
         created_at: link.created_at,
         original_url: link.original_url,
-        short_url: `${process.env.SHORT_URL_BASE || (req.protocol + '://' + req.get('host'))}/s/${link.short_code}`,
+        short_url: `${req.protocol}://${req.get('host')}/s/${link.short_code}`,
         dailyClicks,
         topReferrers: Object.entries(referrersMap).map(([source, count]) => ({ source, count })).sort((a,b) => b.count - a.count),
         topCountries: Object.entries(countriesMap).map(([country, count]) => ({ country, count })).sort((a,b) => b.count - a.count),
@@ -245,10 +245,10 @@ class LinkController {
         return res.status(500).json({ error: 'Failed to fetch links' });
       }
 
-      const shortUrlBase = process.env.SHORT_URL_BASE || `${req.protocol}://${req.get('host')}`;
+      const baseUrl = `${req.protocol}://${req.get('host')}`;
       const linksWithUrls = data.map(link => ({
         ...link,
-        short_url: `${shortUrlBase}/s/${link.short_code}`
+        short_url: `${baseUrl}/s/${link.short_code}`
       }));
 
       res.json({ links: linksWithUrls });
