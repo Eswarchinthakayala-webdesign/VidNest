@@ -88,7 +88,7 @@ export const DownloaderInterface = () => {
       const headers = { 'Content-Type': 'application/json' };
       if (token) headers['Authorization'] = `Bearer ${token}`;
 
-      const response = await fetch('http://localhost:5000/api/v1/video/metadata', {
+      const response = await fetch('https://vidnest-o1fz.onrender.com/api/v1/video/metadata', {
         method: 'POST',
         headers,
         body: JSON.stringify({ url })
@@ -125,7 +125,7 @@ export const DownloaderInterface = () => {
       const headers = { 'Content-Type': 'application/json' };
       if (token) headers['Authorization'] = `Bearer ${token}`;
 
-      const response = await fetch('http://localhost:5000/api/v1/video/download', {
+      const response = await fetch('https://vidnest-o1fz.onrender.com/api/v1/video/download', {
         method: 'POST',
         headers,
         body: JSON.stringify({ 

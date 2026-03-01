@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
 
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000/api/v1';
+const API_BASE = import.meta.env.VITE_API_BASE || 'https://vidnest-o1fz.onrender.com/api/v1';
 
 function useAnalyticsAPI(endpoint, options = {}) {
   const { token } = useAuth();
