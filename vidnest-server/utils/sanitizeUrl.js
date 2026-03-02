@@ -38,6 +38,12 @@ export const sanitizeUrl = (inputUrl) => {
 
     if (!isAllowed) return null;
 
+    // Strip playlist parameters from YouTube URLs for better reliability
+    if (host.includes('youtube.com') || host.includes('youtu.be')) {
+      parsedUrl.searchParams.delete('list');
+      parsedUrl.searchParams.delete('index');
+    }
+
     // Return only the href to strip any local context
     return parsedUrl.href;
   } catch (error) {

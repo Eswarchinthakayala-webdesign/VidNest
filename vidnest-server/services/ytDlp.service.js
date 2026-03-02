@@ -23,13 +23,18 @@ class YtDlpService {
       const raw = await youtubedl(url, {
         dumpJson: true,
         noPlaylist: true,
-        noWarnings: true
+        noWarnings: true,
+        noCheckCertificates: true,
+        userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
       });
       return this._transformMetadata(raw);
     } catch (err) {
       if (err.statusCode === 400) throw err;
       
-      logger.error('Failed to parse yt-dlp output', { error: err.message });
+      logger.error('Failed to parse yt-dlp output', { 
+        error: err.message,
+        stderr: err.stderr 
+      });
       const customErr = new Error(err.message || 'Failed to fetch metadata');
       customErr.statusCode = 500;
       throw customErr;
